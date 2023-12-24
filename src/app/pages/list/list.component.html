@@ -1,0 +1,49 @@
+<main>
+  <nav>
+    @for (category of categories; track $index) {
+    <div
+      class="category"
+      (click)="changeCategory(category.type)"
+      [class.category_active]="categorySignal() === category.type"
+    >
+      {{ category.name }}
+    </div>
+    }
+  </nav>
+  <div class="places">
+    @for (place of placesFiltered(); track place.id) {
+    <section class="place">
+      <div class="place_header">
+        <img [src]="place.img" [alt]="place.title" />
+        <h3>{{ place.title }}</h3>
+      </div>
+      <div class="place_body">
+        <p class="title_style"><strong>Descripcion:</strong></p>
+        <p>{{ place.description }}</p>
+      </div>
+      <div class="place_footer">
+        <p class="title_style"><strong>Calificacion:</strong></p>
+        <p class="raitin">{{ place.rating }} / 10</p>
+        @if (!place.favorite) {
+        <img
+          src="../../../assets/icons/like.svg"
+          alt=""
+          (click)="addFavorite(place.id)"
+        />
+        }@else {
+        <img
+          src="../../../assets/icons/unlike.svg"
+          alt=""
+          (click)="addFavorite(place.id)"
+        />
+        }
+      </div>
+    </section>
+    }@empty {
+    <h3>
+      Parece que no tienes lugares favoritos, para agregar uno da click en el
+      icono de LIKE :)
+    </h3>
+    }
+  </div>
+</main>
